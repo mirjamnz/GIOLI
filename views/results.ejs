@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiz Results</title>
+</head>
+<body>
+  <h1>🎉 Quiz Results</h1>
+
+  <h3>Your Answers:</h3>
+  <ul>
+    <li>🎤 Artist: <%= userAnswer.artist %> 
+      <% if (userAnswer.artistCorrect) { %> ✅ <% } else { %> ❌ (Correct: <%= correct.artist %>) <% } %>
+    </li>
+    <li>🎵 Title: <%= userAnswer.title %> 
+      <% if (userAnswer.titleCorrect) { %> ✅ <% } else { %> ❌ (Correct: <%= correct.title %>) <% } %>
+    </li>
+    <li>🎧 Genre: <%= userAnswer.genre %> 
+      <% if (userAnswer.genreCorrect) { %> ✅ <% } else { %> ❌ (Correct: <%= correct.genre %>) <% } %>
+    </li>
+  </ul>
+
+  <h2>🏆 You scored <%= userAnswer.score %> points!</h2>
+
+  <a href="/">Back to Home</a> | 
+  <a href="/quiz/<%= correct.genre %>">Try Again (Same Genre)</a>
+</body>
+</html>

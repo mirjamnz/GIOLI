@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Guess It or Lose It</title>
+</head>
+<body>
+  <h1>🎵 Guess It or Lose It 🎵 </h1> 
+    <h2> A fun music game for everyone </h2>
+
+  <% if (user) { %>
+    <p>Hello, <strong><%= user.username %></strong>! (Role: <%= user.role %>)</p>
+    <a href="/logout">Logout</a>
+    <br><br>
+    <% if (user.role === 'admin') { %>
+      <a href="/admin">Go to Admin Panel</a>
+      <br><br>
+    <% } %>
+  <% } else { %>
+    <h3>Register</h3>
+    <form method="POST" action="/register">
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Register</button>
+    </form>
+
+    <h3>Login</h3>
+    <form method="POST" action="/login">
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+    <br>
+  <% } %>
+
+  <hr>
+
+  <h3>Start a Music Quiz</h3>
+  <form method="GET" action="/quiz/Pop">
+    <label>Select a genre:</label>
+    <!-- Just one hardcoded genre for now -->
+    <button type="submit">🎧 Pop</button>
+  </form>
+
+  <% if (!user) { %>
+    <p><em>You can try a quiz as a guest!</em></p>
+  <% } %>
+
+</body>
+</html>

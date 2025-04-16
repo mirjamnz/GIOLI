@@ -1,4 +1,3 @@
-# GIOLI
-Guess It or Lose It, a voice-driven music quiz app
-Guests, Members & Admin
+# Guess It or Lose It
 
+A voice-powered music quiz game built with JS, Express, and EJS.
