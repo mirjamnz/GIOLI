@@ -12,18 +12,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ✅ SESSION — this must be before routes!
+// ✅ Session Setup (must be before any routes)
 app.use(session({
   secret: 'guessit-secret-key',
   resave: false,
   saveUninitialized: true,
 }));
 
-// === View Engine
+// === Set View Engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// === Routes (after session middleware)
+// === Routes (loaded after session middleware)
 const adminRoutes = require('./routes/admin');
 app.use('/admin', adminRoutes);
 
@@ -35,10 +35,21 @@ app.use('/', authRoutes);
 
 // === Home Page
 app.get('/', (req, res) => {
-  res.render('index', { user: req.session.user || null });
+  db.query("SELECT DISTINCT genre FROM quizzes ORDER BY genre ASC", (err, results) => {
+    if (err) {
+      console.error("DB error:", err);
+      return res.status(500).send("Database error");
+    }
+
+    const genres = results.map(row => row.genre);
+    res.render('index', {
+      user: req.session.user || null,
+      genres
+    });
+  });
 });
 
-// === Start
+// === Start Server
 const PORT = process.env.PORT || 3300;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
