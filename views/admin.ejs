@@ -1,1 +1,54 @@
-<h1>Admin Panel</h1>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
+</head>
+<body>
+  <h1>🛠️ Admin Panel</h1>
+
+  <h2>Add New Quiz Entry</h2>
+  <form method="POST" action="/admin/add">
+    <label>🎵 Audio URL:</label><br>
+    <input type="text" name="audio_url" required><br><br>
+
+    <label>🎤 Correct Artist:</label><br>
+    <input type="text" name="correct_artist" required><br><br>
+
+    <label>🎶 Correct Title:</label><br>
+    <input type="text" name="correct_title" required><br><br>
+
+    <label>🎧 Genre:</label><br>
+    <input type="text" name="genre" required><br><br>
+
+    <button type="submit">Add Quiz</button>
+  </form>
+
+  <hr>
+
+  <h2>Existing Quizzes</h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Artist</th>
+        <th>Title</th>
+        <th>Genre</th>
+        <th>Audio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% quizzes.forEach((q) => { %>
+        <tr>
+          <td><%= q.id %></td>
+          <td><%= q.correct_artist %></td>
+          <td><%= q.correct_title %></td>
+          <td><%= q.genre %></td>
+          <td><audio src="<%= q.audio_url %>" controls></audio></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <br><a href="/">⬅ Back to Home</a>
+</body>
+</html>

@@ -6,13 +6,17 @@ const router = express.Router();
 
 // Register
 router.post('/register', async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, admin_secret } = req.body;
   const hashed = await bcrypt.hash(password, 10);
-  db.query("INSERT INTO users (username, password) VALUES (?, ?)", [username, hashed], (err) => {
+
+  const role = (admin_secret === process.env.ADMIN_SECRET) ? 'admin' : 'member';
+
+  db.query("INSERT INTO users (username, password, role) VALUES (?, ?, ?)", [username, hashed, role], (err) => {
     if (err) return res.status(500).send("Error registering user.");
     res.redirect('/');
   });
 });
+
 
 // Login
 router.post('/login', (req, res) => {
