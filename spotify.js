@@ -2,6 +2,9 @@
 const axios = require('axios');
 require('dotenv').config();
 
+console.log("Using SPOTIFY_CLIENT_ID:", process.env.SPOTIFY_CLIENT_ID);
+
+
 // Get an access token using the Client Credentials Flow
 async function getAccessToken() {
   try {
@@ -24,7 +27,7 @@ async function getAccessToken() {
 }
 
 // Get 10 previewable tracks from a playlist
-async function getSpotifyQuizTracks(playlistId = '37i9dQZF1DXcZDD7cfEKhW') { // <- "Pop Rising"
+async function getSpotifyQuizTracks(playlistId = '37i9dQZF1DXcZDD7cfEKhW') {
   const token = await getAccessToken();
   if (!token) {
     console.error('No token retrieved. Aborting track request.');

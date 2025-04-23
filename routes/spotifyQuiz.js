@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const { getSpotifyQuizTracks } = require('../spotify');
 
-router.get('/', async (req, res) => {
+router.get('/spotify-quiz', async (req, res) => {
   try {
     const tracks = await getSpotifyQuizTracks();
     res.render('spotify-quiz', { tracks });
