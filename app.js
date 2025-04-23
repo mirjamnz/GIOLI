@@ -24,6 +24,9 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // === Routes (loaded after session middleware)
+const spotifyQuizRoutes = require('./routes/spotifyQuiz');
+app.use('/spotify-quiz', spotifyQuizRoutes);
+
 const adminRoutes = require('./routes/admin');
 app.use('/admin', adminRoutes);
 

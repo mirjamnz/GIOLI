@@ -1,0 +1,18 @@
+<!-- views/spotify-quiz.ejs -->
+<h2>🎧 Spotify Music Quiz</h2>
+
+<% tracks.forEach((track, index) => { %>
+  <div style="margin-bottom: 2em;">
+    <p><strong>Question <%= index + 1 %>:</strong> Who is the artist of this song?</p>
+    <audio controls>
+      <source src="<%= track.preview %>" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+    <form method="POST" action="#">
+      <label for="answer">Your Answer:</label><br>
+      <input type="text" name="answer" placeholder="Type artist name..." />
+      <button type="submit">Submit</button>
+    </form>
+    <p><small><a href="<%= track.link %>" target="_blank">Open in Spotify</a></small></p>
+  </div>
+<% }); %>
