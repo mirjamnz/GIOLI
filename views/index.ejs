@@ -6,7 +6,12 @@
 <body>
   <h1>🎵 Guess It or Lose It 🎵</h1> 
   <h2>A fun music game for everyone</h2>
-
+  <% if (spotifyAccessToken) { %>
+    <p>✅ Connected to Spotify!</p>
+  <% } else { %>
+    <a href="/login-spotify"><button>🔐 Log in with Spotify</button></a>
+  <% } %>
+  
   <% if (user) { %>
     <p>Hello, <strong><%= user.username %></strong>! (Role: <%= user.role %>)</p>
     <a href="/logout">Logout</a>

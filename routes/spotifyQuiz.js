@@ -5,7 +5,7 @@ const { getSpotifyQuizTracks } = require('../spotify');
 
 router.get('/spotify-quiz', async (req, res) => {
   try {
-    const tracks = await getSpotifyQuizTracks();
+    const tracks = await getSpotifyQuizTracks(req);
     res.render('spotify-quiz', { tracks });
   } catch (err) {
     console.error('Error loading Spotify quiz:', err);

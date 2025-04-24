@@ -9,7 +9,12 @@
   <p><strong>Genre:</strong> <%= quiz.genre %></p>
 
   <audio controls autoplay>
-    <source src="<%= quiz.audio_url %>" type="audio/mpeg">
+    <source 
+    src="<%= quiz.audio_url.includes('p.scdn.co') 
+      ? '/quiz/proxy-audio?url=' + encodeURIComponent(quiz.audio_url) 
+      : quiz.audio_url %>" 
+    type="audio/mpeg">
+  
     Your browser does not support the audio element.
   </audio>
 

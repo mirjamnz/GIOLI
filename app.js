@@ -1,4 +1,4 @@
-// app.js
+
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
@@ -12,31 +12,25 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ✅ Session Setup (must be before any routes)
+// === Session Setup ===
 app.use(session({
   secret: 'guessit-secret-key',
   resave: false,
   saveUninitialized: true,
 }));
 
-// === Set View Engine
+// === View Engine ===
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// === Routes (loaded after session middleware)
-const spotifyQuizRoutes = require('./routes/spotifyQuiz');
-app.use('/', spotifyQuizRoutes);
+// === Routes ===
+app.use('/', require('./routes/spotifyAuth'));
+app.use('/', require('./routes/spotifyQuiz'));
+app.use('/admin', require('./routes/admin'));
+app.use('/quiz', require('./routes/quiz')); // 💡 Must come after static/JSON middleware
+app.use('/', require('./routes/auth'));
 
-const adminRoutes = require('./routes/admin');
-app.use('/admin', adminRoutes);
-
-const quizRoutes = require('./routes/quiz');
-app.use('/quiz', quizRoutes);
-
-const authRoutes = require('./routes/auth');
-app.use('/', authRoutes);
-
-// === Home Page
+// === Home Page ===
 app.get('/', (req, res) => {
   db.query("SELECT DISTINCT genre FROM quizzes ORDER BY genre ASC", (err, results) => {
     if (err) {
@@ -47,13 +41,16 @@ app.get('/', (req, res) => {
     const genres = results.map(row => row.genre);
     res.render('index', {
       user: req.session.user || null,
-      genres
+      genres,
+      spotifyAccessToken: req.session.spotifyAccessToken || null
     });
   });
 });
 
-// === Start Server
+// === Start Server ===
 const PORT = process.env.PORT || 3300;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
+
+
